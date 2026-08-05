@@ -9,5 +9,6 @@
     "permissions": ["storage", "alarms", "identity"],
     "background": {
         "service_worker": "background.js"
-    }
+    },
+    "action":{}
 }
