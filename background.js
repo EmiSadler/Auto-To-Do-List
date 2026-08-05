@@ -1,5 +1,5 @@
 
 function openPanel() {
-    chrome.sidePanel.setPanelBehaviour({ openPanelOnActionClick: true});
+    chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true});
     console.log("background loaded")
 }
