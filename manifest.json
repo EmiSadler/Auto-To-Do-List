@@ -6,7 +6,7 @@
     "side_panel": {
         "default_path": "panel.html"
     },
-    "permissions": ["storage", "alarms", "identity"],
+    "permissions": ["storage", "alarms", "identity", "sidePanel"],
     "background": {
         "service_worker": "background.js"
     },
