@@ -15,3 +15,13 @@ function connectGoogleAccount() {
         });
     });
 }
+
+function checkAuthStatus() {
+    chrome.identity.getAuthToken({ interactive: false }, (token) => {
+        if chrome.runtime.lastError || !token {
+            chrome.storage.local.set({ authStatus: "disconnected" });
+        } else {
+            chrome.storage.local.set({ authStatus: "connected" });
+        }
+    });
+}
