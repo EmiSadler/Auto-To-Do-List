@@ -5,3 +5,8 @@ AIM: To create an Auto To-Do List that syncs with Google Calendar and after each
 
 Project Start Date: 31.7.26
 
+FEATURES:
+
+HOW TO USE:
+
+HOW TO INSTALL:
