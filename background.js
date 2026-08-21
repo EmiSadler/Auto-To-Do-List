@@ -30,7 +30,7 @@ function fetchTodaysEvents() {
     chrome.storage.local.get('authToken', ({ authToken }) => {
         const now = new Date();
         const startOfDay = new Date(now,getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
-        const endOfDay = new Date(now.getFullYear(), now,getMonth(), now.getDate(), 23, 59. 59);
+        const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59. 59);
 
         const url = 'https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${startOfDay.ISOString()}&timeMax=${endOfDay.toISOString()}&singleEvents=true&orderBy=startTime';
 
