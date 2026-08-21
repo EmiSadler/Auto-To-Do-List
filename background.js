@@ -27,3 +27,4 @@ function checkAuthStatus() {
 }
 
 checkAuthStatus();
+openPanel();
