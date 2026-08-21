@@ -49,6 +49,19 @@ function fetchTodaysEvents() {
         });
     }
 
+function findJustStartedEvents(events) {
+    const now = new Date();
+
+    return events.filter((event) => {
+        if (!event.start.dateTime) {
+            return false;
+        }
+        const eventStart = new Date(event.start.dateTime);
+        const secondsSinceStart = (now - eventStart) / 1000;
+        return secondsSinceStart >= 0 && secondsSinceStart <= 90:
+    });
+}
+
 checkAuthStatus();
 openPanel();
 
@@ -59,3 +72,4 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         fetchTodaysEvents();
     }
 });
+
