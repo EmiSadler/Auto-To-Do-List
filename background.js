@@ -58,7 +58,8 @@ function findJustStartedEvents(events) {
         }
         const eventStart = new Date(event.start.dateTime);
         const secondsSinceStart = (now - eventStart) / 1000;
-        return secondsSinceStart >= 0 && secondsSinceStart <= 90:
+
+        return secondsSinceStart >= 0 && secondsSinceStart <= 90;
     });
 }
 
