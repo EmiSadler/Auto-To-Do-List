@@ -41,8 +41,8 @@ function fetchTodaysEvents() {
         })
             .then((response) => response.json())
             .then((data) => {
-    //            console.log("Today's events:", data.items);
-                console.log("FULL RESPONSE", data);
+                console.log("Today's events:", data.items);
+                //console.log("FULL RESPONSE", data);
             })
             .catch((error) => {
                 console.error("Fetch failed:", error);
