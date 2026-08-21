@@ -55,7 +55,7 @@ openPanel();
 chrome.alarms.create('pollCalendar', { periodInMinutes: 1 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
-    if (alarm=name === 'pollCalendar') {
+    if (alarm.name === 'pollCalendar') {
         fetchTodaysEvents();
     }
 });
