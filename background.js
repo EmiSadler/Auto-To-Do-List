@@ -41,7 +41,9 @@ function fetchTodaysEvents() {
         })
             .then((response) => response.json())
             .then((data) => {
+                const justStarted = findJustStartedEvents(data.items);
                 console.log("Today's events:", data.items);
+                console.log("Just started:", justStarted);
             })
             .catch((error) => {
                 console.error("Fetch failed:", error);
