@@ -41,9 +41,13 @@ function fetchTodaysEvents() {
         })
             .then((response) => response.json())
             .then((data) => {
+                if (!data.items) {
+                    console.error("No items in response — likely an auth issue:", data);
+                    return;
+                }
                 const justStarted = findJustStartedEvents(data.items);
                 filterUntriggeredEvents(justStarted, (newEvents) => {
-                    console.log("New (untriggered) event:", newEvents);
+                    console.log("New (untriggered) events:", newEvents);
                 });
             })
             .catch((error) => {
