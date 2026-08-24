@@ -43,7 +43,7 @@ function fetchTodaysEvents() {
             .then((data) => {
                 const justStarted = findJustStartedEvents(data.items);
                 filterUntriggeredEvents(justStarted, (newEvents) => {
-                    console.log("New (untriggered) event:", newEvents):
+                    console.log("New (untriggered) event:", newEvents);
                 });
             })
             .catch((error) => {
