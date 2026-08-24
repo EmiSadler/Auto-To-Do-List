@@ -42,8 +42,9 @@ function fetchTodaysEvents() {
             .then((response) => response.json())
             .then((data) => {
                 const justStarted = findJustStartedEvents(data.items);
-                console.log("Today's events:", data.items);
-                console.log("Just started:", justStarted);
+                filterUntriggeredEvents(justStarted, (newEvents) => {
+                    console.log("New (untriggered) event:", newEvents):
+                });
             })
             .catch((error) => {
                 console.error("Fetch failed:", error);
@@ -65,26 +66,20 @@ function findJustStartedEvents(events) {
     });
 }
 
-.then((data) => {
-    const justStarted = findJustStartedEvents(data.items);
-    filterUntriggeredEvents(justStarted, (newEvents) => {
-        console.log("New (untriggered) event:", newEvents):
-    });
-})
 
 //This function is to ensure no duplicate events are triggered based on weirdness with the times to prevent duplicating the associated ToDos
-function filterUntriggeredEvents(events)
-    chrome.storage.local.get('triggeredEventIds' ({ triggeredEventIds }) => {
+function filterUntriggeredEvents(events) {
+    chrome.storage.local.get('triggeredEventIds', ({ triggeredEventIds }) => {
         const triggered = triggeredEventIds || [];
         const triggeredIds = triggered.map((entry) => entry.id);
 
         const newEvents = events.filter((event) => !triggeredIds.includes(event.id));
 
         const now = Date.now();
-        const new Entries = newEvents.map((event) => ({ id: event.id, triggeredAt: now }));
+        const newEntries = newEvents.map((event) => ({ id: event.id, triggeredAt: now }));
         const updatedTriggered = [...triggered, ...newEntries]
     })
-
+}
 checkAuthStatus();
 openPanel();
 
