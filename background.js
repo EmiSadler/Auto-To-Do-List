@@ -51,7 +51,7 @@ function generateTodos(meetingType, event) {
                 text: `Review "${event.summary}" - add follow-up items as needed`,
                 done: false,
                 sourceEventId: event.id,
-                sourceMeetingTitle:event.summary,
+                sourceEventTitle:event.summary,
                 sourceMeetingType: meetingType,
                 createdAt: now
             }
