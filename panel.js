@@ -74,3 +74,5 @@ function renderTodos(todos) {
         container.appendChild(list);
     });
 }
+
+renderTodos(sampleTodos);
