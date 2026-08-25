@@ -93,4 +93,8 @@ function updateAuthBanner() {
     });
 }
 
+document.getElementById('reconnect-button').addEventListener('click', () => {
+    chrome.runtime.sendMessage({ action: 'connectGoogleAccount' });
+});
+
 renderTodos(sampleTodos);
