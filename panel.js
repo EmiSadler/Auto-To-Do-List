@@ -86,4 +86,11 @@ function renderTodos(todos) {
     });
 }
 
+function updateAuthBanner() {
+    chrome.storage.local.get('authStatus', ({ authStatus }) => {
+        const banner = document.getElementById('reconnect-banner');
+        banner.style.display = authStatus === 'disconnected' ? 'block' : 'none';
+    });
+}
+
 renderTodos(sampleTodos);
