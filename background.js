@@ -166,7 +166,7 @@ function fetchTodaysEvents() {
                         }
                     });
                 });
-            });
+            })
             .catch((error) => {
                 console.error("Fetch failed:", error);
             });
