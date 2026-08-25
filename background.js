@@ -218,6 +218,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 });
 
 chrome.runtime.onMessage.addListener((message) => {
+    console.log("Message received:", message);
     if (message.action === 'connectGoogleAccount') {
         connectGoogleAccount();
     }
