@@ -60,7 +60,7 @@ function findJustStartedEvents(events) {
     const now = new Date();
 
     return events.filter((event) => {
-        if (!event.start.dateTime) {
+        if ( !event.start || !event.start.dateTime) {
             return false;
         }
         const eventStart = new Date(event.start.dateTime);
@@ -74,6 +74,7 @@ function findJustStartedEvents(events) {
 //This function is to ensure no duplicate events are triggered based on weirdness with the times to prevent duplicating the associated ToDos
 function filterUntriggeredEvents(events, callback) {
     chrome.storage.local.get('triggeredEventIds', ({ triggeredEventIds }) => {
+        const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
         const triggered = triggeredEventIds || [];
         const triggeredIds = triggered.map((entry) => entry.id);
 
