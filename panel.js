@@ -50,7 +50,7 @@ function renderTodos(todos) {
 
     if (todos.length === 0) {
         const emptyMessage = document.createElement('p');
-        emptyMessage.textContent = "Nothing todo for now, why don't you make a cup of tea?";
+        emptyMessage.textContent = "Nothing to do for now, why don't you make a cup of tea?";
         emptyMessage.className = "empty-state";
         container.appendChild(emptyMessage);
         return
