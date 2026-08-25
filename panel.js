@@ -58,7 +58,7 @@ function renderTodos(todos) {
         const list = document.createElement('li');
         
         group.todos.forEach((todo) => {
-            const item = document.createElement('li');
+            const item = document.createElement('ul');
 
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
@@ -69,7 +69,7 @@ function renderTodos(todos) {
 
             item.appendChild(checkbox);
             item.appendChild(label);
-            item.appendChild(item);
+            list.appendChild(item);
         });
         container.appendChild(list);
     });
