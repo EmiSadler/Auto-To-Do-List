@@ -48,6 +48,14 @@ function renderTodos(todos) {
     const container = document.getElementById('todo-list');
     container.innerHTML = "";
 
+    if (todos.length === 0) {
+        const emptyMessage = document.createElement('p');
+        emptyMessage.textContent = "Nothing todo for now, why don't you make a cup of tea?";
+        emptyMessage.className = "empty-state";
+        container.appendChild(emptyMessage);
+        return
+    }
+
     const grouped = groupTodosByMeeting(todos);
 
     Object.values(grouped).forEach((group) => {
