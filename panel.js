@@ -55,10 +55,10 @@ function renderTodos(todos) {
         meetingHeader.textContent = group.title;
         container.appendChild(meetingHeader);
 
-        const list = document.createElement('li');
+        const list = document.createElement('ul');
         
         group.todos.forEach((todo) => {
-            const item = document.createElement('ul');
+            const item = document.createElement('li');
 
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
