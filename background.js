@@ -72,7 +72,7 @@ function findJustStartedEvents(events) {
 
 
 //This function is to ensure no duplicate events are triggered based on weirdness with the times to prevent duplicating the associated ToDos
-function filterUntriggeredEvents(events) {
+function filterUntriggeredEvents(events, callback) {
     chrome.storage.local.get('triggeredEventIds', ({ triggeredEventIds }) => {
         const triggered = triggeredEventIds || [];
         const triggeredIds = triggered.map((entry) => entry.id);
@@ -81,8 +81,12 @@ function filterUntriggeredEvents(events) {
 
         const now = Date.now();
         const newEntries = newEvents.map((event) => ({ id: event.id, triggeredAt: now }));
-        const updatedTriggered = [...triggered, ...newEntries]
-    })
+        const updatedTriggered = [...triggered, ...newEntries];
+
+        chrome.storage.local.set({ triggeredEventIds: updatedTriggered }, () => {
+            callback(newEvents);
+        });
+    });
 }
 checkAuthStatus();
 openPanel();
