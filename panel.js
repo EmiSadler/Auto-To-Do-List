@@ -94,6 +94,7 @@ function updateAuthBanner() {
 }
 
 document.getElementById('reconnect-button').addEventListener('click', () => {
+    console.log("Reconnect button clicked");
     chrome.runtime.sendMessage({ action: 'connectGoogleAccount' });
 });
 
