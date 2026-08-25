@@ -1,3 +1,34 @@
+const MEETING_TYPES = [
+    {
+        type: "Placement Meeting",
+        keywords: ["tri-part", "placement meeting", "placement call", "placement"]
+    },
+    {
+        type: "Progress Meeting",
+        keywords: ["progress", "progress meeting", "progress call"]
+    },
+    {
+        type: "Wellbeing Meeting",
+        keywords: ["wellbeing", "wellbeing meeting", "wellbeing catch-up", "well-being", "well being"]
+    }
+];
+
+function titleMatchesType(title, meetingType) {
+    const lowerTitle = title.toLowerCase();
+    return meetingType.keywords.some((keyword) => lowerTitle.includes(keyword));
+}
+
+function classifyMeeting(title, description) {
+    const combinedText = `${title} ${description || ""}`;
+    for (const meetingType of MEETING_TYPES) {
+        if (titleMatchesType(combinedText, meetingType)) {
+            return meetingType.type;
+        }
+    }
+
+    return "unknown";
+}
+
 
 function openPanel() {
     chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true});
