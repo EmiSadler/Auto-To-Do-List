@@ -63,6 +63,9 @@ function renderTodos(todos) {
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.checked = todo.done;
+            checkbox.addEventListener('change', () => {
+                item.classList.toggle('done');
+            });
 
             const label = document.createElement('span');
             label.textContent = todo.text;
