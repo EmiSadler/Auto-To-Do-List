@@ -71,7 +71,18 @@ function generateTodos(meetingType, event) {
     }));
 }
 
+function saveNewTodos(newTodos, callback) {
+  chrome.storage.local.get('todos', ({ todos }) => {
+    const existingTodos = todos || [];
+    const updatedTodos = [...existingTodos, ...newTodos];
 
+    chrome.storage.local.set({ todos: updatedTodos }, () => {
+      if (callback) {
+        callback(updatedTodos);
+      }
+    });
+  });
+}
 
 function titleMatchesType(title, meetingType) {
     const lowerTitle = title.toLowerCase();
