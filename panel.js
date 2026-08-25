@@ -98,3 +98,4 @@ document.getElementById('reconnect-button').addEventListener('click', () => {
 });
 
 renderTodos(sampleTodos);
+updateAuthBanner();
