@@ -42,3 +42,10 @@ li.done span {
     text-decoration: line-through;
     color: #999999;
 }
+
+.empty-state {
+    color: #999999;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 40px;
+}
