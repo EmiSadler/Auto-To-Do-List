@@ -157,7 +157,7 @@ function fetchTodaysEvents() {
                 filterUntriggeredEvents(justStarted, (newEvents) => {
                     newEvents.forEach((event) => {
                         const meetingType = classifyMeeting(event.summary, event.description);
-                        const newTodos = generareTodos(meetingType, event);
+                        const newTodos = generateTodos(meetingType, event);
 
                         if (newTodos.length > 0) {
                             saveNewTodos(newTodos, (updatedTodos) => {
