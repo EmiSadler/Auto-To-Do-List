@@ -15,6 +15,64 @@ const MEETING_TYPES = [
 
 const EXCLUDED_KEYWORDS = ["lunch", "meditation", "admin", "out of office", "ooo", "busy", "focus time", "commuting", "commute"]
 
+const TODO_TEMPLATES = {
+    "Placement Meeting": [
+        "Schedule next meeting in Google Calendar",
+        "Complete the Review form on Aptem",
+        "Create next Review form on Aptem",
+        "Update Holiday Handover",
+        "Update Learner notes"
+    ],
+    "Progress Meeting": [
+        "Schedule next meeting in Google Calendar",
+        "Complete the Review form on Aptem",
+        "Create next Review form on Aptem",
+        "Update Holiday Handover",
+        "Update Learner notes"
+    ],
+    "Wellbeing Meeting": [
+        "Schedule next meeting in Google Calendar",
+        "Complete the Review form on Aptem",
+        "Create next Review form on Aptem",
+        "Update Holiday Handover",
+        "Update Learner notes"
+    ]
+};
+
+function generateTodos(meetingType, event) {
+    if (meetingType === "excluded") {
+        return [];
+    }
+    const now = Date.now();
+    if (meetingType === "unknown") {
+        return [
+            {
+                id: crypto.randomUUID(),
+                text: `Review "${event.summary}" - add follow-up items as needed`,
+                done: false,
+                sourceEventId: event.id,
+                sourceMeetingTitle:event.summary,
+                sourceMeetingType: meetingType,
+                createdAt: now
+            }
+        ];
+    }
+
+    const templateItems = TODO_TEMPLATES[meetingType] || [];
+
+    return templateItems.map((text) => ({
+        id: crypto.randomUUID(),
+        text: text,
+        done: false,
+        sourceEventId: event.id,
+        sourceEventTitle: event.summary,
+        sourceMeetingType: meetingType,
+        createdAt: now
+    }));
+}
+
+
+
 function titleMatchesType(title, meetingType) {
     const lowerTitle = title.toLowerCase();
     return meetingType.keywords.some((keyword) => lowerTitle.includes(keyword));
