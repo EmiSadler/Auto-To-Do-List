@@ -86,4 +86,4 @@ function renderTodos(todos) {
     });
 }
 
-renderTodos(sampleTodos);
+renderTodos([]);
