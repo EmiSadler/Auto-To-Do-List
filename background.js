@@ -13,6 +13,8 @@ const MEETING_TYPES = [
     }
 ];
 
+const EXCLUDED_KEYWORDS = ["lunch", "meditation", "admin", "out of office", "ooo", "busy", "focus time", "commuting", "commute"]
+
 function titleMatchesType(title, meetingType) {
     const lowerTitle = title.toLowerCase();
     return meetingType.keywords.some((keyword) => lowerTitle.includes(keyword));
