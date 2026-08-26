@@ -115,6 +115,17 @@ function updateAuthBanner() {
     });
 }
 
+function clearCompletedTodos() {
+    chrome.storage.local.get('todos', ({ todos }) => {
+        const remaining = (todos || []).filter((todo) => !todo.done);
+        chrome.storage.local.set({ todos: remaining });
+    });
+}
+
+document.getElementById('clear-completed-button').addEventListener('click', () => {
+    clearCompletedTodos();
+});
+
 document.getElementById('reconnect-button').addEventListener('click', () => {
     console.log("Reconnect button clicked");
     chrome.runtime.sendMessage({ action: 'connectGoogleAccount' });
