@@ -73,6 +73,7 @@ function renderTodos(todos) {
             checkbox.checked = todo.done;
             checkbox.addEventListener('change', () => {
                 item.classList.toggle('done');
+                updateTodoDoneState(todo.id, checkbox.checked);
             });
 
             const label = document.createElement('span');
@@ -83,6 +84,18 @@ function renderTodos(todos) {
             list.appendChild(item);
         });
         container.appendChild(list);
+    });
+}
+
+function updateTodoDoneState(todoId, newDoneValue) {
+    chrome.storage.local.get('todos', ({ todos }) => {
+        const updatedTodos = (todos || []).map((todo) => {
+            if (todo.id === todoId) {
+                return { ...todo, done: newDoneValue };
+            }
+            return todo;
+        });
+        chrome.storage.local.set({ todos: updatedTodos });
     });
 }
 
