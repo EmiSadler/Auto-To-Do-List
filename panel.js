@@ -87,6 +87,35 @@ function renderTodos(todos) {
             list.appendChild(item);
         });
         container.appendChild(list);
+
+        const addRow = document.createElement('div');
+        addRow.className = 'add-todo-row';
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = 'Add a to-do...';
+
+        const addButton = document.createElement('button');
+        addButton.textContent = 'Add';
+
+        const handleAdd = () => {
+            const text = input.value.trim();
+            if (text === '') {
+                return;
+            }
+            addCustomeTodo(text, group.eventId, group.title, group.type);
+            input.value = '';
+        };
+
+        addButton.addEventListener('click', handleAdd);
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                handleAdd();
+            }
+        });
+        addRow.appendChild(input);
+        addRow.appendChild(addButton);
+        container.appendChild(addRow);
     });
 }
 
