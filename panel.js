@@ -108,5 +108,11 @@ document.getElementById('reconnect-button').addEventListener('click', () => {
     }, 2000);
 });
 
+chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'local' && changes.todos) {
+        loadAndRenderTodos();
+    }
+});
+
 loadAndRenderTodos();
 updateAuthBanner();
