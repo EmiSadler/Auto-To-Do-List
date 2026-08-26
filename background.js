@@ -118,7 +118,7 @@ function connectGoogleAccount() {
             console.error("Auth failed", chrome.runtime.lastError);
             return;
         }
-        chrome.storage.local.set({ authToken: token }, () => {
+        chrome.storage.local.set({ authToken: token, authStatus: "connected" }, () => {
 
         });
     });

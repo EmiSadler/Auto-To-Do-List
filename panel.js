@@ -1,34 +1,34 @@
 // Sample data for testing
 
-const sampleTodos = [
-  {
-    id: "1",
-    text: "Schedule next meeting in Google Calendar",
-    done: false,
-    sourceEventId: "evt-wellbeing-1",
-    sourceEventTitle: "Matt/Emily - Wellbeing Meeting",
-    sourceMeetingType: "Wellbeing Meeting",
-    createdAt: Date.now()
-  },
-  {
-    id: "2",
-    text: "Complete the Review form on Aptem",
-    done: false,
-    sourceEventId: "evt-wellbeing-1",
-    sourceEventTitle: "Matt/Emily - Wellbeing Meeting",
-    sourceMeetingType: "Wellbeing Meeting",
-    createdAt: Date.now()
-  },
-  {
-    id: "3",
-    text: "Update Learner notes",
-    done: true,
-    sourceEventId: "evt-placement-1",
-    sourceEventTitle: "Matt/Lewis/Emily - Placement Meeting",
-    sourceMeetingType: "Placement Meeting",
-    createdAt: Date.now()
-  }
-];
+// const sampleTodos = [
+//   {
+//     id: "1",
+//     text: "Schedule next meeting in Google Calendar",
+//     done: false,
+//     sourceEventId: "evt-wellbeing-1",
+//     sourceEventTitle: "Matt/Emily - Wellbeing Meeting",
+//     sourceMeetingType: "Wellbeing Meeting",
+//     createdAt: Date.now()
+//   },
+//   {
+//     id: "2",
+//     text: "Complete the Review form on Aptem",
+//     done: false,
+//     sourceEventId: "evt-wellbeing-1",
+//     sourceEventTitle: "Matt/Emily - Wellbeing Meeting",
+//     sourceMeetingType: "Wellbeing Meeting",
+//     createdAt: Date.now()
+//   },
+//   {
+//     id: "3",
+//     text: "Update Learner notes",
+//     done: true,
+//     sourceEventId: "evt-placement-1",
+//     sourceEventTitle: "Matt/Lewis/Emily - Placement Meeting",
+//     sourceMeetingType: "Placement Meeting",
+//     createdAt: Date.now()
+//   }
+// ];
 
 function groupTodosByMeeting(todos) {
     return todos.reduce((groups, todo) => {
@@ -86,6 +86,12 @@ function renderTodos(todos) {
     });
 }
 
+function loadAndRenderTodos() {
+    chrome.storage.local.get('todos', ({ todos }) => {
+        renderTodos(todos || []);
+    });
+}
+
 function updateAuthBanner() {
     chrome.storage.local.get('authStatus', ({ authStatus }) => {
         const banner = document.getElementById('reconnect-banner');
@@ -96,7 +102,11 @@ function updateAuthBanner() {
 document.getElementById('reconnect-button').addEventListener('click', () => {
     console.log("Reconnect button clicked");
     chrome.runtime.sendMessage({ action: 'connectGoogleAccount' });
+
+    setTimeout(() => {
+        updateAuthBanner();
+    }, 2000);
 });
 
-renderTodos(sampleTodos);
+loadAndRenderTodos();
 updateAuthBanner();
