@@ -78,7 +78,7 @@ To adjust keywords or to-do templates, edit `TAXONOMY.md`/`TEMPLATES.md` for ref
 
 ## Known limitations
 
-- Single-user only - templates aren't currently customizable per person (see `FUTURE-01` on the project board).
+- Single-user only - templates aren't currently customizable per person.
 - Requires the browser to be open; polling stops if Chrome is fully closed.
 - Auth tokens expire periodically - the reconnect banner will appear automatically when this happens.
 
