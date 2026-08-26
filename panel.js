@@ -1,34 +1,3 @@
-// Sample data for testing
-
-// const sampleTodos = [
-//   {
-//     id: "1",
-//     text: "Schedule next meeting in Google Calendar",
-//     done: false,
-//     sourceEventId: "evt-wellbeing-1",
-//     sourceEventTitle: "Matt/Emily - Wellbeing Meeting",
-//     sourceMeetingType: "Wellbeing Meeting",
-//     createdAt: Date.now()
-//   },
-//   {
-//     id: "2",
-//     text: "Complete the Review form on Aptem",
-//     done: false,
-//     sourceEventId: "evt-wellbeing-1",
-//     sourceEventTitle: "Matt/Emily - Wellbeing Meeting",
-//     sourceMeetingType: "Wellbeing Meeting",
-//     createdAt: Date.now()
-//   },
-//   {
-//     id: "3",
-//     text: "Update Learner notes",
-//     done: true,
-//     sourceEventId: "evt-placement-1",
-//     sourceEventTitle: "Matt/Lewis/Emily - Placement Meeting",
-//     sourceMeetingType: "Placement Meeting",
-//     createdAt: Date.now()
-//   }
-// ];
 
 function groupTodosByMeeting(todos) {
     return todos.reduce((groups, todo) => {
@@ -121,7 +90,7 @@ function renderTodos(todos) {
             if (text === '') {
                 return;
             }
-            addCustomeTodo(text, group.eventId, group.title, group.type);
+            addCustomTodo(text, group.eventId, group.title, group.type);
             input.value = '';
         };
 
