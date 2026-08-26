@@ -151,6 +151,7 @@ function fetchTodaysEvents() {
             .then((data) => {
                 if (!data.items) {
                     console.error("No items in response — likely an auth issue:", data);
+                    checkAuthStatus();
                     return;
                 }
                 const justStarted = findJustStartedEvents(data.items);
