@@ -157,6 +157,7 @@ function fetchTodaysEvents() {
                 filterUntriggeredEvents(justStarted, (newEvents) => {
                     processEventsSequentially(newEvents);
             });
+            })    
             .catch((error) => {
                 console.error("Fetch failed:", error);
             });
