@@ -35,7 +35,9 @@ function groupTodosByMeeting(todos) {
         const eventId = todo.sourceEventId;
         if (!groups[eventId]) {
             groups[eventId] = {
+                eventId: todo.sourceEventId,
                 title: todo.sourceEventTitle,
+                type: todo.sourceMeetingType,
                 todos: []
             };
         }
