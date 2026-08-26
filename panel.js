@@ -115,25 +115,6 @@ function updateAuthBanner() {
     });
 }
 
-function processEventsSequentially(events, index = 0) {
-    if (index >= events.length) {
-        return;
-    }
-
-    const event = events[index];
-    const meetingType = classifyMeeting(event.summary, event.description);
-    const newTodos = generateTodos(meetingType, event);
-
-    if (newTodos.length > 0) {
-        saveNewTodos(newTodos, () => {
-            console.log(`Saved ${newTodos.length} to-do(s) for "${event.summary}" (${meetingType})`);
-            processEventsSequentially(events, index + 1);
-        });
-    } else {
-        processEventsSequentially(events, index + 1);
-    }
-}
-
 document.getElementById('reconnect-button').addEventListener('click', () => {
     console.log("Reconnect button clicked");
     chrome.runtime.sendMessage({ action: 'connectGoogleAccount' });
