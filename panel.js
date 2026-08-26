@@ -46,6 +46,22 @@ function groupTodosByMeeting(todos) {
     }, {});
 }
 
+function addCustomTodo(text, sourceEventId, sourceEventTitle, sourceMeetingType) {
+    const newTodo = {
+        id: crypto.randomUUID(),
+        text: text,
+        done: false,
+        sourceEventId: sourceEventId,
+        sourceEventTitle: sourceEventTitle,
+        sourceMeetingType: sourceMeetingType,
+        createdAt: Date.now()
+    };
+    chrome.storage.local.get('todos', ({ todos }) => {
+        const updatedTodos = [...(todos || []), newTodo];
+        chrome.storage.local.set({ todos: updatedTodos });
+    });
+}
+
 function renderTodos(todos) {
     const container = document.getElementById('todo-list');
     container.innerHTML = "";
