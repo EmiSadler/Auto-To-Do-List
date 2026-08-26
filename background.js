@@ -155,18 +155,8 @@ function fetchTodaysEvents() {
                 }
                 const justStarted = findJustStartedEvents(data.items);
                 filterUntriggeredEvents(justStarted, (newEvents) => {
-                    newEvents.forEach((event) => {
-                        const meetingType = classifyMeeting(event.summary, event.description);
-                        const newTodos = generateTodos(meetingType, event);
-
-                        if (newTodos.length > 0) {
-                            saveNewTodos(newTodos, (updatedTodos) => {
-                                console.log(`Saved ${newTodos.length} to-do(s) for "${event.summary}" (${meetingType})`);
-                            });
-                        }
-                    });
-                });
-            })
+                    processEventsSequentially(newEvents);
+            });
             .catch((error) => {
                 console.error("Fetch failed:", error);
             });
