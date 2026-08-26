@@ -136,7 +136,7 @@ document.getElementById('reconnect-button').addEventListener('click', () => {
 });
 
 chrome.storage.onChanged.addListener((changes, area) => {
-    if (area === 'local') {
+    if (area !== 'local') {
         return;
     }
     if (changes.todos) {
