@@ -67,6 +67,9 @@ function renderTodos(todos) {
         
         group.todos.forEach((todo) => {
             const item = document.createElement('li');
+                if (todo.done) {
+                    item.classList.add('done');
+                }
 
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
