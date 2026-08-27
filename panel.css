@@ -141,6 +141,7 @@ add-todo-row {
     font-size: 13px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    margin-top: 4px;
 }
 
 #new-checklist-submit {
