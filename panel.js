@@ -75,8 +75,13 @@ function renderTodos(todos) {
         });
         container.appendChild(list);
 
+        const addToggle = document.createElement('button');
+        addToggle.textContent = '+';
+        addToggle.className = 'add-todo-toggle';
+
         const addRow = document.createElement('div');
         addRow.className = 'add-todo-row';
+        addRow.style.display = 'none';
 
         const input = document.createElement('input');
         input.type = 'text';
@@ -92,7 +97,15 @@ function renderTodos(todos) {
             }
             addCustomTodo(text, group.eventId, group.title, group.type);
             input.value = '';
+            addRow.style.display = 'none';
+            addToggle.style.display = 'inline-block';
         };
+
+        addToggle.addEventListener('click', () => {
+            addToggle.style.display = 'none';
+            addRow.style.display = 'flex';
+            input.focus();
+        })
 
         addButton.addEventListener('click', handleAdd);
         input.addEventListener('keydown', (event) => {
@@ -102,6 +115,7 @@ function renderTodos(todos) {
         });
         addRow.appendChild(input);
         addRow.appendChild(addButton);
+        container.appendChild(addToggle);
         container.appendChild(addRow);
     });
 }
