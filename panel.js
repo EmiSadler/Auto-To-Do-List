@@ -152,6 +152,51 @@ function clearCompletedTodos() {
     });
 }
 
+function createStandaloneChecklist(title, firstItemText) {
+    const eventId = crypto.randomUUID();
+    const now = Date.now();
+
+    const newTodo = {
+        id: crypto.randomUUID(),
+        text: firstItemText,
+        done: false,
+        sourceEventId: eventId,
+        sourceEventTitle: title,
+        sourceMeetingType: "custom",
+        createdAt: now
+    };
+
+    chrome.storage.local.get('todos', ({ todos }) => {
+        const updatedTodos = [...(todos || []), newTodo];
+        chrome.storage.local.set({ todos: updatedTodos });
+    });
+}
+
+document.getElementById('new-checklist-button').addEventListener('click', () => {
+    document.getElementById('new-checklist-button').style.display = 'none';
+    document.getElementById('new-checklist-form').style.display = 'block';
+    document.getElementById('new-checklist-title').focus();
+});
+
+document.getElementById('new-checklist-submit').addEventListener('click', () => {
+    const titleInput = document.getElementById('new-checklist-title');
+    const itemInput = document.getElementById('new-checklist-item');
+
+    const title = titleInput.value.trim();
+    const itemText = itemInput.value.trim();
+
+    if (title === '' || itemText === '') {
+        return;
+    }
+
+    createStandaloneChecklist(title, itemText);
+
+    titleInput.value = '';
+    itemInput.value = '';
+    document.getElementById('new-checklist-form').style.display = 'none';
+    document.getElementById('new-checklist-button').style.display = 'inline-block';
+});
+
 document.getElementById('clear-completed-button').addEventListener('click', () => {
     clearCompletedTodos();
 });
