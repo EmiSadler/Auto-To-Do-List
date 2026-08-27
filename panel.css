@@ -150,4 +150,5 @@ add-todo-row {
     background: #1a73e8;
     color: white;
     cursor: pointer;
+    margin-top: 4px;
 }
