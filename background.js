@@ -129,7 +129,7 @@ function checkAuthStatus() {
         if (chrome.runtime.lastError || !token) {
             chrome.storage.local.set({ authStatus: "disconnected" });
         } else {
-            chrome.storage.local.set({ authStatus: "connected" });
+            chrome.storage.local.set({ authToken: token, authStatus: "connected" });
         }
     });
 }
