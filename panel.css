@@ -113,3 +113,41 @@ add-todo-row {
 .add-todo-toggle:hover {
     background: #e8e8e8;
 }
+
+#new-checklist-button {
+    margin-left: 8px;
+    padding: 4px 10px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #f5f5f5;
+    cursor: pointer;
+}
+
+#new-checklist-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 10px 0;
+    padding: 10px 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+}
+
+#new-checklist-form input {
+    padding: 4px 6px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#new-checklist-submit {
+    align-self: flex-start;
+    padding: 4px 10px;
+    font-size: 13px;
+    border: none;
+    border-radius: 4px;
+    background: #1a73e8;
+    color: white;
+    cursor: pointer;
+}
