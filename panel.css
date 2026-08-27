@@ -136,6 +136,7 @@ add-todo-row {
 }
 
 #new-checklist-form input {
+    width: 100%;
     padding: 4px 6px;
     font-size: 13px;
     border: 1px solid #ccc;
