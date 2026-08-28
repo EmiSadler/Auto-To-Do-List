@@ -181,7 +181,7 @@ document.getElementById('new-checklist-button').addEventListener('click', () => 
 document.getElementById('new-checklist-cancel').addEventListener('click', () => {
     document.getElementById('new-checklist-title').value = '';
     document.getElementById('new-checklist-item').value = '';
-    document.getElementById('new-checkilist-form').style.display = 'none';
+    document.getElementById('new-checklist-form').style.display = 'none';
     document.getElementById('new-checklist-button').style.display = 'inline-block';
 });
 
