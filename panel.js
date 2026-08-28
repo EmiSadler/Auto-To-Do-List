@@ -172,6 +172,19 @@ function createStandaloneChecklist(title, firstItemText) {
     });
 }
 
+function applyTheme() {
+    chrome.storage.local.get('themeOverride', ({ themeOverride }) => {
+        let theme;
+
+        if (themeOverride === 'dark' || themeOverride === 'light') {
+            theme = themeOverride;
+        } else {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.body.setAttributes('data-theme', theme);
+    });
+}
+
 document.getElementById('new-checklist-button').addEventListener('click', () => {
     document.getElementById('new-checklist-button').style.display = 'none';
     document.getElementById('new-checklist-form').style.display = 'block';
