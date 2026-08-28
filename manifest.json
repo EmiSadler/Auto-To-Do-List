@@ -10,9 +10,21 @@
     "background": {
         "service_worker": "background.js"
     },
-    "action":{},
+    "action":{
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
     "oauth2": {
         "client_id": "253326875980-ni3go92ct50vtc5a99kb3um7mh6qp0hu.apps.googleusercontent.com",
         "scopes": ["https://www.googleapis.com/auth/calendar.readonly"]
+    },
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
     }
+
 }
