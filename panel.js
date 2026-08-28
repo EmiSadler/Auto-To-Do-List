@@ -185,6 +185,17 @@ function applyTheme() {
     });
 }
 
+function toggleTheme() {
+    chrome.storage.local.get('themeOverride', ({ themeOverride }) => {
+        const currentlyDark = document.body.getAttribute('data-theme') === 'dark';
+        const newOverride = currentlyDark ? 'light' : 'dark';
+
+        chrome.storage.local.set({ themeOverride: newOverride }, () => {
+            applyTheme;
+        });
+    });
+}
+
 document.getElementById('new-checklist-button').addEventListener('click', () => {
     document.getElementById('new-checklist-button').style.display = 'none';
     document.getElementById('new-checklist-form').style.display = 'block';
