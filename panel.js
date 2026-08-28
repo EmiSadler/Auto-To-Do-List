@@ -182,6 +182,11 @@ function applyTheme() {
             theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
         document.body.setAttribute('data-theme', theme);
+
+        const toggleButton = document.getElementById('theme-togle-button');
+        if (toggleButton) {
+            toggleButton.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
     });
 }
 
