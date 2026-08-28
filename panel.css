@@ -6,6 +6,11 @@ body {
     background: #FFFFFF;
 }
 
+body[data-theme="dark"] {
+    color: #e8e8e8;
+    background: #1e1e1e;
+}
+
 h1 {
     font-size: 20px;
     margin: 0 0 16px 0;
@@ -16,6 +21,10 @@ h3 {
     margin: 20px 0 8px 0;
     padding-bottom: 4px;
     border-bottom: 1px solid #e0e0e0;
+}
+
+body[data-theme="dark"] h3 {
+    color: #777777;
 }
 
 ul {
@@ -50,12 +59,21 @@ li.done span {
     margin-top: 40px;
 }
 
+body[data-theme="dark"] .empty-state {
+    color: #888888;
+}
+
 #reconnect-banner {
     background: #FFF3CD;
     border: 1px solid #FFC107;
     border-radius: 6px;
     padding: 12px;
     margin-bottom: 16px;
+}
+
+body[data-theme="dark"] #reconnect-banner {
+    background: #4a3b0a;
+    border-color: #8a6d1a;
 }
 
 #reconnect-banner p {
@@ -110,8 +128,21 @@ add-todo-row {
     margin: 4px 0 16px 0;
 }
 
+body[data-theme="dark"] .add-todo-toggle {
+    background: #2a2a2a;
+    color: #ccc;
+    border-color: #444444;
+}
+
 .add-todo-toggle:hover {
     background: #e8e8e8;
+}
+
+body[data-theme="dark"] .add-todo-row input,
+body[data-theme="dark"] #new-checkilst-form input {
+    background: #2a2a2a;
+    color: #e8e8e8;
+    border-color: #444444;
 }
 
 #clear-completed-button{
@@ -144,6 +175,10 @@ add-todo-row {
     padding: 28px 10px 10px 10px
     /* border: 1px solid #e0e0e0;
     border-radius: 6px; */
+}
+
+body[data-theme="dark"] #new-checklist-form {
+    border-color: #3a3a3a;
 }
 
 #new-checklist-form input {
