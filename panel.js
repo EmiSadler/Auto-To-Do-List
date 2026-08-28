@@ -181,7 +181,7 @@ function applyTheme() {
         } else {
             theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
-        document.body.setAttributes('data-theme', theme);
+        document.body.setAttribute('data-theme', theme);
     });
 }
 
