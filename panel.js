@@ -242,5 +242,10 @@ chrome.storage.onChanged.addListener((changes, area) => {
     }
 });
 
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    applyTheme();
+});
+
+applyTheme();
 loadAndRenderTodos();
 updateAuthBanner();
