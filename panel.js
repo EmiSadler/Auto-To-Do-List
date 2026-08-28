@@ -183,7 +183,7 @@ function applyTheme() {
         }
         document.body.setAttribute('data-theme', theme);
 
-        const toggleButton = document.getElementById('theme-togle-button');
+        const toggleButton = document.getElementById('theme-toggle-button');
         if (toggleButton) {
             toggleButton.textContent = theme === 'dark' ? '☀️' : '🌙';
         }
