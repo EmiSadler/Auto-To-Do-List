@@ -246,6 +246,8 @@ document.getElementById('reconnect-button').addEventListener('click', () => {
     }, 2000);
 });
 
+document.getElementById('theme-toggle-button').addEventListener('click', toggleTheme);
+
 chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== 'local') {
         return;
