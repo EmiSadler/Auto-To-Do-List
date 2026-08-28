@@ -196,7 +196,7 @@ function toggleTheme() {
         const newOverride = currentlyDark ? 'light' : 'dark';
 
         chrome.storage.local.set({ themeOverride: newOverride }, () => {
-            applyTheme;
+            applyTheme();
         });
     });
 }
