@@ -23,6 +23,19 @@
 - Update Holiday Handover
 - Update Learner notes
 
+## APP Meeting
+
+
+## Gateway Meeting
+- APEX: Upload Portfolio
+- APEX: Upload Project Brief
+- APEX: Upload Gateway Form
+- APEX: Upload Reasonable Adjustments form (optional)
+- APEX: Check learners details are correct (including address for cert delivery)
+- APTEM: Complete Gateway Review form
+- APTEM: Ensure OTJ Hours are correct
+- APTEM: Create Tracker (Completion of Program) & Upload Gateway Form from meeting
+- SLACK: Post in apprs-gateway
 
 ## Fallback
 - Review "{meeting title}" - add follow up todos as needed

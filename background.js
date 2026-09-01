@@ -10,6 +10,14 @@ const MEETING_TYPES = [
     {
         type: "Wellbeing Meeting",
         keywords: ["wellbeing", "wellbeing meeting", "wellbeing catch-up", "well-being", "well being"]
+    },
+    {
+        type: "Gateway Meeting",
+        keywords: ["gateway", "gate way", "gateway meeting"]
+    },
+    {
+        type: "APP Meeting",
+        keywords: ["app meeting", "provision plan", "inclusion meeting", "accessibility provision plan", "app"]
     }
 ];
 
@@ -36,6 +44,22 @@ const TODO_TEMPLATES = {
         "Create next Review form on Aptem",
         "Update Holiday Handover",
         "Update Learner notes"
+    ],
+    "Gateway Meeting": [
+        "APEX: Upload Portfolio",
+        "APEX: Upload Project Brief",
+        "APEX: Upload Gateway Form",
+        "APEX: Upload Reasonable Adjustments form (optional)",
+        "APEX: Check learners details are correct (including address for cert delivery)",
+        "APTEM: Complete Gateway Review form",
+        "APTEM: Ensure OTJ Hours are correct",
+        "APTEM: Create Tracker (Completion of Program) & Upload Gateway Form from meeting",
+        "SLACK: Post in apprs-gateway"
+    ],
+    "APP Meeting": [
+        "APTEM: Ensure learner is correctly assigned (Babbage, Lovelace, Turing)",
+        "APTEM: Complete APP review form",
+        "Schedule follow-up meeting if needed"
     ]
 };
 
