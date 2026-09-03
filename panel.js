@@ -238,11 +238,16 @@ document.getElementById('clear-completed-button').addEventListener('click', () =
 });
 
 document.getElementById('reconnect-button').addEventListener('click', () => {
-    console.log("Reconnect button clicked");
+    const button = document.getElementById('reconnect-button');
+    button.disabled = true;
+    button.textContent = 'Connecting...';
+
     chrome.runtime.sendMessage({ action: 'connectGoogleAccount' });
 
     setTimeout(() => {
         updateAuthBanner();
+        button.disabled = false;
+        button.textContent = 'Reconnect Google Calendar';
     }, 2000);
 });
 
