@@ -63,6 +63,89 @@ const TODO_TEMPLATES = {
     ]
 };
 
+const DEFAULT_MEETING_TYPES = [
+  {
+    id: crypto.randomUUID(),
+    type: "Placement Meeting",
+    keywords: ["tri-part", "placement meeting", "placement call", "placement"],
+    todos: [
+      "Schedule next meeting in Google Calendar",
+      "Complete the Review form on Aptem",
+      "Create next Review form on Aptem",
+      "Update Holiday Handover",
+      "Update Learner notes"
+    ]
+  },
+  {
+    id: crypto.randomUUID(),
+    type: "Progress Meeting",
+    keywords: ["progress", "progress meeting", "progress call"],
+    todos: [
+      "Schedule next meeting in Google Calendar",
+      "Complete the Review form on Aptem",
+      "Create next Review form on Aptem",
+      "Update Holiday Handover",
+      "Update Learner notes"
+    ]
+  },
+  {
+    id: crypto.randomUUID(),
+    type: "Wellbeing Meeting",
+    keywords: ["wellbeing", "wellbeing meeting", "wellbeing catch-up", "well-being", "well being"],
+    todos: [
+      "Schedule next meeting in Google Calendar",
+      "Complete the Review form on Aptem",
+      "Create next Review form on Aptem",
+      "Update Holiday Handover",
+      "Update Learner notes"
+    ]
+  },
+  {
+    id: crypto.randomUUID(),
+    type: "Gateway Meeting",
+    keywords: ["gateway", "gate way", "gateway meeting"],
+    todos: [
+      "APEX: Upload Portfolio",
+      "APEX: Upload Project Brief",
+      "APEX: Upload Gateway Form",
+      "APEX: Upload Reasonable Adjustments form (optional)",
+      "APEX: Check learners details are correct (including address for cert delivery)",
+      "APTEM: Complete Gateway Review form",
+      "APTEM: Ensure OTJ Hours are correct",
+      "APTEM: Create Tracker (Completion of Program) & Upload Gateway Form from meeting",
+      "SLACK: Post in apprs-gateway"
+    ]
+  },
+  {
+    id: crypto.randomUUID(),
+    type: "APP Meeting",
+    keywords: ["app meeting", "provision plan", "inclusion meeting", "accessibility provision plan", "app"],
+    todos: [
+      "APTEM: Ensure learner is correctly assigned (Babbage, Lovelace, Turing)",
+      "APTEM: Complete APP review form",
+      "Schedule follow-up meeting if needed"
+    ]
+  }
+];
+
+const DEFAULT_EXCLUDED_KEYWORDS = ["lunch", "meditation", "admin", "out of office", "ooo", "busy", "focus time", "commuting", "commute"];
+
+function seedConfigIfMissing() {
+    chrome.storage.local.get(['meetingTypeConfig', 'excludedKeywords'], (result) => {
+        const updates = {};
+        
+        if (result.meetingTypeConfig === undefined) {
+            updates.meetingTypeConfig = DEFAULT_MEETING_TYPES;
+        }
+        if (result.excludedKeywords === undefined) {
+            updates.excludedKeywords = DEFAULT_EXCLUDED_KEYWORDS;
+        }
+        if (Object.keys(updates).length > 0) {
+            chrome.storage.local.set(updates);
+        }
+    });
+}
+
 function generateTodos(meetingType, event) {
     if (meetingType === "excluded") {
         return [];
