@@ -51,3 +51,76 @@ function buildMeetingTypeCard(meetingType) {
 
     return card;
 }
+
+function buildEditableList(label, items, onChange) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'editable-list';
+
+  const heading = document.createElement('h4');
+  heading.textContent = label;
+  wrapper.appendChild(heading);
+
+  const list = document.createElement('ul');
+
+  let currentItems = [...items];
+
+  const renderItems = () => {
+    list.innerHTML = "";
+    currentItems.forEach((item, index) => {
+      const li = document.createElement('li');
+
+      const span = document.createElement('span');
+      span.textContent = item;
+
+      const removeButton = document.createElement('button');
+      removeButton.textContent = '✕';
+      removeButton.className = 'remove-item-button';
+      removeButton.addEventListener('click', () => {
+        currentItems = currentItems.filter((_, i) => i !== index);
+        renderItems();
+        onChange(currentItems);
+      });
+
+      li.appendChild(span);
+      li.appendChild(removeButton);
+      list.appendChild(li);
+    });
+  };
+
+  renderItems();
+  wrapper.appendChild(list);
+
+  const addRow = document.createElement('div');
+  addRow.className = 'add-item-row';
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.placeholder = `Add ${label.toLowerCase()}...`;
+
+  const addButton = document.createElement('button');
+  addButton.textContent = 'Add';
+
+  const handleAdd = () => {
+    const value = input.value.trim();
+    if (value === '') {
+      return;
+    }
+    currentItems = [...currentItems, value];
+    input.value = '';
+    renderItems();
+    onChange(currentItems);
+  };
+
+  addButton.addEventListener('click', handleAdd);
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      handleAdd();
+    }
+  });
+
+  addRow.appendChild(input);
+  addRow.appendChild(addButton);
+  wrapper.appendChild(addRow);
+
+  return wrapper;
+}
