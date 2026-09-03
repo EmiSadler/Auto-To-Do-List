@@ -24,7 +24,9 @@
 - Update Learner notes
 
 ## APP Meeting
-
+- APTEM: Ensure learner is correctly assigned (Babbage, Lovelace, Turing)
+- APTEM: Complete APP review form
+- Schedule follow-up meeting if needed
 
 ## Gateway Meeting
 - APEX: Upload Portfolio
