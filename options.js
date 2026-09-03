@@ -161,7 +161,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== 'local') {
         return;
     }
-    if (changes.meetngTypeConfig) {
+    if (changes.meetingTypeConfig) {
         loadAndRenderConfig();
     }
 });
