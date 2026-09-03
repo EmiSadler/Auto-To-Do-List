@@ -130,6 +130,9 @@ const DEFAULT_MEETING_TYPES = [
 
 const DEFAULT_EXCLUDED_KEYWORDS = ["lunch", "meditation", "admin", "out of office", "ooo", "busy", "focus time", "commuting", "commute"];
 
+let currentMeetingTypes = [];
+let currentExcludedWords = [];
+
 function seedConfigIfMissing() {
     chrome.storage.local.get(['meetingTypeConfig', 'excludedKeywords'], (result) => {
         const updates = {};
@@ -142,6 +145,16 @@ function seedConfigIfMissing() {
         }
         if (Object.keys(updates).length > 0) {
             chrome.storage.local.set(updates);
+        }
+    });
+}
+
+function refreshConfigCache(callback) {
+    chrome.storage.local.get(['meetingTypeConfig', 'excludedKeywords'], (result) => {
+        currentMeetingTypes = result.meetingTypeConfig || [];
+        currentExcludedKeywords = result.excludedKeywords || [];
+        if (callback) {
+            callback();
         }
     });
 }
