@@ -180,7 +180,8 @@ function generateTodos(meetingType, event) {
         ];
     }
 
-    const templateItems = TODO_TEMPLATES[meetingType] || [];
+    const matchingType = currentMeetingTypes.find((mt) => mt.type === meetingType);
+    const templateItems = matchingType ? matchingType.todos : [];
 
     return templateItems.map((text) => ({
         id: crypto.randomUUID(),
