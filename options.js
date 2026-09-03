@@ -155,4 +155,15 @@ function addNewMeetingType() {
   });
 }
 
+document.getElementById('add-type-button').addEventListener('click', addNewMeetingType);
+
+chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'local') {
+        return;
+    }
+    if (changes.meetngTypeConfig) {
+        loadAndRenderConfig();
+    }
+});
+
 loadAndRenderConfig();
