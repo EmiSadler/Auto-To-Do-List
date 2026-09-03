@@ -23,7 +23,7 @@ function renderMeetingTypes(types) {
     container.innerHTML = "";
 
     types.forEach((meetingType) => {
-        container.appendChild(buildMeetingTypeCard(meetingType));
+        container.appendChild(buildMeetingTypeCard(meetingType, types));
     });
 }
 
@@ -50,6 +50,17 @@ function buildMeetingTypeCard(meetingType) {
 
     card.appendChild(nameInput);
     card.appendChild(deleteTypeButton);
+
+    const warnings = valaidateMeetingType(meetingType, allTypes);
+    if (warnings.length > 0) {
+        const warningBox = document.createElement('div');
+        warningBox.className = 'warning-box';
+        warnings.forEach((warning) => {
+            const line = document.createElement('p');
+            line.textContent = `${warning}`;
+            warningBox.appendChild(line);
+        });
+    }
 
     card.appendChild(buildEditableList(
         'Keywords',
@@ -167,6 +178,28 @@ function addNewMeetingType() {
     const updated = [...(meetingTypeConfig || []), newType];
     chrome.storage.local.set({ meetingTypeConfig: updated });
   });
+}
+
+function validateMeetingType(meetingType, allTypes) {
+  const warnings = [];
+
+  if (meetingType.type.trim() === '') {
+    warnings.push('This meeting type has no name.');
+  }
+
+  if (meetingType.keywords.length === 0) {
+    warnings.push('No keywords set — this type will never trigger.');
+  }
+
+  const otherTypes = allTypes.filter((mt) => mt.id !== meetingType.id);
+  const duplicateKeywords = meetingType.keywords.filter((keyword) =>
+    otherTypes.some((other) => other.keywords.includes(keyword))
+  );
+  if (duplicateKeywords.length > 0) {
+    warnings.push(`Keyword(s) also used elsewhere: ${duplicateKeywords.join(', ')} — whichever type comes first will win.`);
+  }
+
+  return warnings;
 }
 
 document.getElementById('add-type-button').addEventListener('click', addNewMeetingType);
