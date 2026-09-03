@@ -133,7 +133,7 @@ const DEFAULT_EXCLUDED_KEYWORDS = ["lunch", "meditation", "admin", "out of offic
 let currentMeetingTypes = [];
 let currentExcludedWords = [];
 
-function seedConfigIfMissing() {
+function seedConfigIfMissing(callback) {
     chrome.storage.local.get(['meetingTypeConfig', 'excludedKeywords'], (result) => {
         const updates = {};
         
@@ -144,7 +144,9 @@ function seedConfigIfMissing() {
             updates.excludedKeywords = DEFAULT_EXCLUDED_KEYWORDS;
         }
         if (Object.keys(updates).length > 0) {
-            chrome.storage.local.set(updates);
+            chrome.storage.local.set(updates, callback);
+        } else if (callback) {
+            callback();
         }
     });
 }
@@ -337,11 +339,15 @@ function filterUntriggeredEvents(events, callback) {
         });
     });
 }
-checkAuthStatus();
-openPanel();
-seedConfigIfMissing();
 
-chrome.alarms.create('pollCalendar', { periodInMinutes: 1 });
+seedConfigIfMissing(() => {
+    refreshConfigCache(() => {
+        checkAuthStatus();
+        openPanel();
+        chrome.alarms.create('pollCalendar', { periodInMinutes: 1 });
+    });
+});
+
 
 chrome.alarms.onAlarm.addListener((alarm) => {
     if (alarm.name === 'pollCalendar') {
@@ -353,5 +359,14 @@ chrome.runtime.onMessage.addListener((message) => {
     console.log("Message received:", message);
     if (message.action === 'connectGoogleAccount') {
         connectGoogleAccount();
+    }
+});
+
+chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'local') {
+        return;
+    }
+    if (changes.meetingTypeConfig || changes.excludedKeywords) {
+        refreshConfigCache();
     }
 });
