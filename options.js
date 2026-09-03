@@ -4,6 +4,20 @@ function loadAndRenderConfig() {
     });
 }
 
+function loadAndRenderExcluded() {
+    chrome.storage.local.get('excludedKeywords', ({ excludedKeywords }) => {
+        const container = document.getElementById('excluded-keywords-container');
+        container.innerHTML = "";
+        container.appendChild(buildEditableList(
+            'Excluded keywords',
+            excludedKeywords || [],
+            (newList) => {
+                chrome.storage.local.set({ excludedKeywords: newList });
+            }
+        ));
+    });
+}
+
 function renderMeetingTypes(types) {
     const container = document.getElementById('meeting-types-container');
     container.innerHTML = "";
@@ -164,6 +178,10 @@ chrome.storage.onChanged.addListener((changes, area) => {
     if (changes.meetingTypeConfig) {
         loadAndRenderConfig();
     }
+    if (changes.excludedKeywords) {
+        loadAndRenderExcluded();
+    }
 });
 
 loadAndRenderConfig();
+loadAndRenderExcluded();
