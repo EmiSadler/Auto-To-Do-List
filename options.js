@@ -211,7 +211,7 @@ function resetToDefaults() {
     if (!confirmed) {
         return;
     }
-    chrome.runtime.sendMessage({ action: 'resetToDefaults'};)
+    chrome.runtime.sendMessage({ action: 'resetToDefaults'});
 }
 
 document.getElementById('add-type-button').addEventListener('click', addNewMeetingType);
