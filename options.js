@@ -141,4 +141,18 @@ function deleteMeetingType(typeId) {
   });
 }
 
+function addNewMeetingType() {
+  const newType = {
+    id: crypto.randomUUID(),
+    type: "New Meeting Type",
+    keywords: [],
+    todos: []
+  };
+
+  chrome.storage.local.get('meetingTypeConfig', ({ meetingTypeConfig }) => {
+    const updated = [...(meetingTypeConfig || []), newType];
+    chrome.storage.local.set({ meetingTypeConfig: updated });
+  });
+}
+
 loadAndRenderConfig();
