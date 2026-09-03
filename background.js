@@ -214,12 +214,12 @@ function titleMatchesType(title, meetingType) {
 function classifyMeeting(title, description) {
     const combinedText = `${title} ${description || ""}`.toLowerCase();
 
-    const isExcluded = EXCLUDED_KEYWORDS.some((keyword) => combinedText.includes(keyword));
+    const isExcluded = currentExcludedKeywords.some((keyword) => combinedText.includes(keyword));
     if (isExcluded) {
         return "excluded";
     }
 
-    for (const meetingType of MEETING_TYPES) {
+    for (const meetingType of currentMeetingTypes) {
         if (titleMatchesType(combinedText, meetingType)) {
             return meetingType.type;
         }
