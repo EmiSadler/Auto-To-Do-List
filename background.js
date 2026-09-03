@@ -361,7 +361,7 @@ chrome.runtime.onMessage.addListener((message) => {
     if (message.action === 'connectGoogleAccount') {
         connectGoogleAccount();
     }
-    if (message.acion === "resetToDefaults") {
+    if (message.action === "resetToDefaults") {
         chrome.storage.local.set({
             meetingTypeConfig: DEFAULT_MEETING_TYPES,
             excludedKeywords: DEFAULT_EXCLUDED_KEYWORDS
