@@ -140,3 +140,5 @@ function deleteMeetingType(typeId) {
     chrome.storage.local.set({ meetingTypeConfig: updated });
   });
 }
+
+loadAndRenderConfig();
