@@ -18,7 +18,7 @@
         }
     },
     "oauth2": {
-        "client_id": "253326875980-ni3go92ct50vtc5a99kb3um7mh6qp0hu.apps.googleusercontent.com",
+        "client_id": "253326875980-jvnlsrc3v4a9fk61ejpmd19jbgh31ctp.apps.googleusercontent.com",
         "scopes": ["https://www.googleapis.com/auth/calendar.readonly"]
     },
     "icons": {
