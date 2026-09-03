@@ -326,6 +326,7 @@ function filterUntriggeredEvents(events, callback) {
 }
 checkAuthStatus();
 openPanel();
+seedConfigIfMissing();
 
 chrome.alarms.create('pollCalendar', { periodInMinutes: 1 });
 
