@@ -27,7 +27,7 @@ function renderMeetingTypes(types) {
     });
 }
 
-function buildMeetingTypeCard(meetingType) {
+function buildMeetingTypeCard(meetingType, allTypes) {
     const card = document.createElement('div');
     card.className = 'type-card';
 
@@ -51,7 +51,7 @@ function buildMeetingTypeCard(meetingType) {
     card.appendChild(nameInput);
     card.appendChild(deleteTypeButton);
 
-    const warnings = valaidateMeetingType(meetingType, allTypes);
+    const warnings = validateMeetingType(meetingType, allTypes);
     if (warnings.length > 0) {
         const warningBox = document.createElement('div');
         warningBox.className = 'warning-box';
@@ -60,6 +60,7 @@ function buildMeetingTypeCard(meetingType) {
             line.textContent = `${warning}`;
             warningBox.appendChild(line);
         });
+        card.appendChild(warningBox);
     }
 
     card.appendChild(buildEditableList(
