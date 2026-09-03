@@ -361,6 +361,12 @@ chrome.runtime.onMessage.addListener((message) => {
     if (message.action === 'connectGoogleAccount') {
         connectGoogleAccount();
     }
+    if (message.acion === "resetToDefaults") {
+        chrome.storage.local.set({
+            meetingTypeConfig: DEFAULT_MEETING_TYPES,
+            excludedKeywords: DEFAULT_EXCLUDED_KEYWORDS
+        });
+    }
 });
 
 chrome.storage.onChanged.addListener((changes, area) => {
@@ -371,3 +377,4 @@ chrome.storage.onChanged.addListener((changes, area) => {
         refreshConfigCache();
     }
 });
+

@@ -203,7 +203,19 @@ function validateMeetingType(meetingType, allTypes) {
   return warnings;
 }
 
+function resetToDefaults() {
+    const confirmed = confirm(
+        "This will erase all your custom meeting types and keywords, and restore the original defaults. This cannot be undone. Continue?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+    chrome.runtime.sentMessage({ action: 'resetToDefaults'};)
+}
+
 document.getElementById('add-type-button').addEventListener('click', addNewMeetingType);
+document.getElementById('reset-defaults-button').addEventListener('click', resetToDefaults);
 
 chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== 'local') {
