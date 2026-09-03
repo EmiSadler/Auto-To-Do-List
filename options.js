@@ -124,3 +124,19 @@ function buildEditableList(label, items, onChange) {
 
   return wrapper;
 }
+
+function updateMeetingTypeField(typeId, field, newValue) {
+  chrome.storage.local.get('meetingTypeConfig', ({ meetingTypeConfig }) => {
+    const updated = meetingTypeConfig.map((mt) =>
+      mt.id === typeId ? { ...mt, [field]: newValue } : mt
+    );
+    chrome.storage.local.set({ meetingTypeConfig: updated });
+  });
+}
+
+function deleteMeetingType(typeId) {
+  chrome.storage.local.get('meetingTypeConfig', ({ meetingTypeConfig }) => {
+    const updated = meetingTypeConfig.filter((mt) => mt.id !== typeId);
+    chrome.storage.local.set({ meetingTypeConfig: updated });
+  });
+}
