@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Auto To-Do Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div id="app">
+    <h1>Settings</h1>
+    <p class="subtitle">Customize what to-dos get created for each meeting type.</p>
+
+    <div id="meeting-types-container"></div>
+
+    <button id="add-type-button">+ Add meeting type</button>
+
+    <hr>
+
+    <h2>Never create to-dos for</h2>
+    <p class="subtitle">Events matching these words are always ignored.</p>
+    <div id="excluded-keywords-container"></div>
+
+    <hr>
+
+    <button id="reset-defaults-button">Reset to defaults</button>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>
