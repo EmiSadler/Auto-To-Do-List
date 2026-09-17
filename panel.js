@@ -313,6 +313,19 @@ chrome.storage.onChanged.addListener((changes, area) => {
     }
 });
 
+meetingHeader.addEventListener('drop', (event) => {
+    event.preventDefault();
+    console.log("DROP FIRED", { draggedId: event.dataTransfer.getData('text/plain'), targetId: group.eventId });
+    meetingHeader.classList.remove('drag-over');
+    const draggedId = event.dataTransfer.getData('text/plain');
+    const targetId = group.eventId;
+    if (draggedId === targetId) {
+        return;
+    }
+    reorderGroups(draggedId, targetId, currentOrderIds);
+});
+
+
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
     applyTheme();
 });
