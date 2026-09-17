@@ -154,6 +154,13 @@ function renderTodos(todos, groupOrder) {
     });
 }
 
+function reorderGroups(draggedId, targetId, currentOrderIds) {
+    const withoutDragged = currentOrderIds.filter((id) => id !== draggedId);
+    const targetIndex = withoutDragged.indexOf(targetId);
+    withoutDragged.splice(targetIndex, 0, draggedId);
+    chrome.storage.local.set({ groupOrder: withoutDragged });
+}
+
 function updateTodoDoneState(todoId, newDoneValue) {
     chrome.storage.local.get('todos', ({ todos }) => {
         const updatedTodos = (todos || []).map((todo) => {
