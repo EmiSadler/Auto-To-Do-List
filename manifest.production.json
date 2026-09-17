@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Auto To-Do",
-    "version": "0.1.1",
+    "version": "0.1.0",
     "options_page": "options.html",
     "side_panel": {
         "default_path": "panel.html"
@@ -18,13 +18,12 @@
         }
     },
     "oauth2": {
-        "client_id": "253326875980-89i5jhbudfl87kjr7ea1p0iufdo6007j.apps.googleusercontent.com",
+        "client_id": "253326875980-jvnlsrc3v4a9fk61ejpmd19jbgh31ctp.apps.googleusercontent.com",
         "scopes": ["https://www.googleapis.com/auth/calendar.readonly"]
     },
     "icons": {
         "16": "icons/icon16.png",
         "48": "icons/icon48.png",
         "128": "icons/icon128.png"
-    },
-    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuGWlB3E/YbL+k/wsS1thCy6yndDqIve//T2o/m23mMydBhZ+3jjmXjp8OWO2MlHFxRXL9INQKwJTvw/G1eofBRRRGY/tZF5hMAU00QZ4i+YWN7GENwSySarRR8/mlc4hh71TJF/CV7K/JdSLy43khNs+Gl38zwxZv1DfsYVgMfU7MQ5Lz5Z1M7hC1SZZ/5mLIRwNHZ7awNzdcFQl4NK6G/u55IgSs3E8Exz4gLHPvA5B+v4rBkETS1yitVJpS+GjayegD2XFdv+cH98oMzTlEWOkMsVLTPdRGORK5r85W67UT32lZ5LyUGtlFx1ONANuV+g3pIF6Yj5/IZRqbgud2wIDAQAB"
+    }
 }
