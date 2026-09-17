@@ -263,3 +263,17 @@ body[data-theme="dark"] #theme-toggle-button {
 .group-wrapper.collapsed .group-body {
   display: none;
 }
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pin-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 6px;
+}

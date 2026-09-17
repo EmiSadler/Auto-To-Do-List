@@ -31,11 +31,31 @@ function addCustomTodo(text, sourceEventId, sourceEventTitle, sourceMeetingType)
     });
 }
 
-function renderTodos(todos, groupOrder, collapsedGroups) {
+function buildDisplayGroups(todos, pinnedHeadings) {
+    const grouped = groupTodosByMeeting(todos);
+
+    pinnedHeadings.forEach((pinned) => {
+        if (!grouped[pinned.eventId]) {
+            grouped[pinned.eventId] = {
+                eventId: pinned.eventId,
+                title: pinned.title,
+                type: pinned.type,
+                todos: []
+            };
+        }
+    });
+
+    return grouped;
+}
+
+function renderTodos(todos, groupOrder, collapsedGroups, pinnedHeadings) {
     const container = document.getElementById('todo-list');
     container.innerHTML = "";
 
-    if (todos.length === 0) {
+    const grouped = buildDisplayGroups(todos, pinnedHeadings);
+    const hasAnyGroups = Object.keys(grouped).length > 0;
+
+    if (!hasAnyGroups) {
         const emptyMessage = document.createElement('p');
         emptyMessage.textContent = "Nothing to do for now, why don't you make a cup of tea?";
         emptyMessage.className = "empty-state";
@@ -43,7 +63,6 @@ function renderTodos(todos, groupOrder, collapsedGroups) {
         return;
     }
 
-    const grouped = groupTodosByMeeting(todos);
     const sortedGroups = sortGroupsByOrder(grouped, groupOrder);
     const currentOrderIds = sortedGroups.map((group) => group.eventId);
 
@@ -56,6 +75,8 @@ function renderTodos(todos, groupOrder, collapsedGroups) {
         if (isCollapsed) {
             groupWrapper.classList.add('collapsed');
         }
+
+        const isPinned = pinnedHeadings.some((p) => p.eventId === group.eventId);
 
         groupWrapper.addEventListener('dragstart', (event) => {
             event.dataTransfer.setData('text/plain', group.eventId);
@@ -88,13 +109,28 @@ function renderTodos(todos, groupOrder, collapsedGroups) {
             reorderGroups(draggedId, targetId, currentOrderIds);
         });
 
+        const headerRow = document.createElement('div');
+        headerRow.className = 'header-row';
+
         const meetingHeader = document.createElement('h3');
         meetingHeader.textContent = group.title;
         meetingHeader.className = 'collapsible-header';
         meetingHeader.addEventListener('click', () => {
             toggleGroupCollapsed(group.eventId);
         });
-        groupWrapper.appendChild(meetingHeader);
+
+        const pinButton = document.createElement('button');
+        pinButton.className = 'pin-button';
+        pinButton.textContent = isPinned ? '📌' : '📍';
+        pinButton.title = isPinned ? 'Unpin this heading' : 'Pin this heading';
+        pinButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            togglePinned(group.eventId, group.title, group.type);
+        });
+
+        headerRow.appendChild(meetingHeader);
+        headerRow.appendChild(pinButton);
+        groupWrapper.appendChild(headerRow);
 
         const bodyWrapper = document.createElement('div');
         bodyWrapper.className = 'group-body';
@@ -195,6 +231,17 @@ function toggleGroupCollapsed(eventId) {
     });
 }
 
+function togglePinned(eventId, title, type) {
+    chrome.storage.local.get('pinnedHeadings', ({ pinnedHeadings }) => {
+        const current = pinnedHeadings || [];
+        const isCurrentlyPinned = current.some((p) => p.eventId === eventId);
+        const updated = isCurrentlyPinned
+            ? current.filter((p) => p.eventId !== eventId)
+            : [...current, { eventId, title, type }];
+        chrome.storage.local.set({ pinnedHeadings: updated });
+    });
+}
+
 function updateTodoDoneState(todoId, newDoneValue) {
     chrome.storage.local.get('todos', ({ todos }) => {
         const updatedTodos = (todos || []).map((todo) => {
@@ -208,8 +255,8 @@ function updateTodoDoneState(todoId, newDoneValue) {
 }
 
 function loadAndRenderTodos() {
-    chrome.storage.local.get(['todos', 'groupOrder', 'collapsedGroups'], ({ todos, groupOrder, collapsedGroups }) => {
-        renderTodos(todos || [], groupOrder || [], collapsedGroups || []);
+    chrome.storage.local.get(['todos', 'groupOrder', 'collapsedGroups', 'pinnedHeadings'], ({ todos, groupOrder, collapsedGroups, pinnedHeadings }) => {
+        renderTodos(todos || [], groupOrder || [], collapsedGroups || [], pinnedHeadings || []);
     });
 }
 
@@ -339,7 +386,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== 'local') {
         return;
     }
-    if (changes.todos || changes.groupOrder || changes.collapsedGroups) {
+    if (changes.todos || changes.groupOrder || changes.collapsedGroups || changes.pinnedHeadings) {
         loadAndRenderTodos();
     }
     if (changes.authStatus) {
