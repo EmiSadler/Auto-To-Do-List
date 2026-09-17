@@ -138,6 +138,13 @@ function loadAndRenderTodos() {
     });
 }
 
+function sortGroupsByOrder(grouped, groupOrder) {
+    const allIds = Object.keys(grouped);
+    const knownOrder = groupOrder.filter((id) => allIds.includes(id));
+    const unknownIds = allIds.filter((id) => !knownOrder.includes(id));
+    return [...knownOrder, ...unknownIds].map((id) => grouped[id]);
+}
+
 function updateAuthBanner() {
     chrome.storage.local.get('authStatus', ({ authStatus }) => {
         const banner = document.getElementById('reconnect-banner');
