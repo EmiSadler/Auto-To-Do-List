@@ -231,3 +231,15 @@ body[data-theme="dark"] #theme-toggle-button {
     background: #2a2a2a;
     border-color: #444444;
 }
+
+.draggable-heading {
+    cursor: grab;
+}
+
+.draggable-heading.dragging {
+    opacity: 0.4;
+}
+
+.draggable-heading.drag-over {
+    border-top: 2px solid #1a73e8;
+}
