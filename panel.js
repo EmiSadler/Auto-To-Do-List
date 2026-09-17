@@ -31,7 +31,7 @@ function addCustomTodo(text, sourceEventId, sourceEventTitle, sourceMeetingType)
     });
 }
 
-function renderTodos(todos) {
+function renderTodos(todos, groupOrder) {
     const container = document.getElementById('todo-list');
     container.innerHTML = "";
 
@@ -40,23 +40,57 @@ function renderTodos(todos) {
         emptyMessage.textContent = "Nothing to do for now, why don't you make a cup of tea?";
         emptyMessage.className = "empty-state";
         container.appendChild(emptyMessage);
-        return
+        return;
     }
 
     const grouped = groupTodosByMeeting(todos);
+    const sortedGroups = sortGroupsByOrder(grouped, groupOrder);
+    const currentOrderIds = sortedGroups.map((group) => group.eventId);
 
-    Object.values(grouped).forEach((group) => {
+    sortedGroups.forEach((group) => {
         const meetingHeader = document.createElement('h3');
         meetingHeader.textContent = group.title;
+        meetingHeader.draggable = true;
+        meetingHeader.className = 'draggable-heading';
+
+        meetingHeader.addEventListener('dragstart', (event) => {
+            event.dataTransfer.setData('text/plain', group.eventId);
+            meetingHeader.classList.add('dragging');
+        });
+
+        meetingHeader.addEventListener('dragend', () => {
+            meetingHeader.classList.remove('dragging');
+        });
+
+        meetingHeader.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            meetingHeader.classList.add('drag-over');
+        });
+
+        meetingHeader.addEventListener('dragleave', () => {
+            meetingHeader.classList.remove('drag-over');
+        });
+
+        meetingHeader.addEventListener('drop', (event) => {
+            event.preventDefault();
+            meetingHeader.classList.remove('drag-over');
+            const draggedId = event.dataTransfer.getData('text/plain');
+            const targetId = group.eventId;
+            if (draggedId === targetId) {
+                return;
+            }
+            reorderGroups(draggedId, targetId, currentOrderIds);
+        });
+
         container.appendChild(meetingHeader);
 
         const list = document.createElement('ul');
-        
+
         group.todos.forEach((todo) => {
             const item = document.createElement('li');
-                if (todo.done) {
-                    item.classList.add('done');
-                }
+            if (todo.done) {
+                item.classList.add('done');
+            }
 
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
@@ -105,7 +139,7 @@ function renderTodos(todos) {
             addToggle.style.display = 'none';
             addRow.style.display = 'flex';
             input.focus();
-        })
+        });
 
         addButton.addEventListener('click', handleAdd);
         input.addEventListener('keydown', (event) => {
