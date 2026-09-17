@@ -54,6 +54,7 @@ function renderTodos(todos, groupOrder) {
         meetingHeader.className = 'draggable-heading';
 
         meetingHeader.addEventListener('dragstart', (event) => {
+            console.log("Drag Start", group.eventId);
             event.dataTransfer.setData('text/plain', group.eventId);
             meetingHeader.classList.add('dragging');
         });
@@ -73,6 +74,7 @@ function renderTodos(todos, groupOrder) {
 
         meetingHeader.addEventListener('drop', (event) => {
             event.preventDefault();
+            console.log("Drop Fired", {draggedId: event.dataTransfer.getData('text/plain'), targetId: group.eventId });
             meetingHeader.classList.remove('drag-over');
             const draggedId = event.dataTransfer.getData('text/plain');
             const targetId = group.eventId;
