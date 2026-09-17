@@ -90,7 +90,14 @@ function renderTodos(todos, groupOrder, collapsedGroups) {
 
         const meetingHeader = document.createElement('h3');
         meetingHeader.textContent = group.title;
+        meetingHeader.className = 'collapsible-header';
+        meetingHeader.addEventListener('click', () => {
+            toggleGroupCollapsed(group.eventId);
+        });
         groupWrapper.appendChild(meetingHeader);
+
+        const bodyWrapper = document.createElement('div');
+        bodyWrapper.className = 'group-body';
 
         const list = document.createElement('ul');
 
@@ -115,7 +122,7 @@ function renderTodos(todos, groupOrder, collapsedGroups) {
             item.appendChild(label);
             list.appendChild(item);
         });
-        groupWrapper.appendChild(list);
+        bodyWrapper.appendChild(list);
 
         const addToggle = document.createElement('button');
         addToggle.textContent = '+';
@@ -157,9 +164,10 @@ function renderTodos(todos, groupOrder, collapsedGroups) {
         });
         addRow.appendChild(input);
         addRow.appendChild(addButton);
-        groupWrapper.appendChild(addToggle);
-        groupWrapper.appendChild(addRow);
+        bodyWrapper.appendChild(addToggle);
+        bodyWrapper.appendChild(addRow);
 
+        groupWrapper.appendChild(bodyWrapper);
         container.appendChild(groupWrapper);
     });
 }
@@ -174,6 +182,17 @@ function reorderGroups(draggedId, targetId, currentOrderIds) {
     }
     withoutDragged.splice(newIndex, 0, draggedId);
     chrome.storage.local.set({ groupOrder: withoutDragged });
+}
+
+function toggleGroupCollapsed(eventId) {
+    chrome.storage.local.get('collapsedGroups', ({ collapsedGroups }) => {
+        const current = collapsedGroups || [];
+        const isCurrentlyCollapsed = current.includes(eventId);
+        const updated = isCurrentlyCollapsed
+            ? current.filter((id) => id !== eventId)
+            : [...current, eventId];
+        chrome.storage.local.set({ collapsedGroups: updated });
+    });
 }
 
 function updateTodoDoneState(todoId, newDoneValue) {
@@ -320,7 +339,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== 'local') {
         return;
     }
-    if (changes.todos || changes.groupOrder) {
+    if (changes.todos || changes.groupOrder || changes.collapsedGroups) {
         loadAndRenderTodos();
     }
     if (changes.authStatus) {
