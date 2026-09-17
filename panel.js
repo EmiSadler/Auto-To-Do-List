@@ -66,8 +66,10 @@ function renderTodos(todos, groupOrder) {
             groupWrapper.classList.add('drag-over');
         });
 
-        groupWrapper.addEventListener('dragleave', () => {
-            groupWrapper.classList.remove('drag-over');
+        groupWrapper.addEventListener('dragleave', (event) => {
+            if (!groupWrapper.contains(event.relatedTarget)) {
+                groupWrapper.classList.remove('drag-over');
+            }
         });
 
         groupWrapper.addEventListener('drop', (event) => {
@@ -158,9 +160,14 @@ function renderTodos(todos, groupOrder) {
 }
 
 function reorderGroups(draggedId, targetId, currentOrderIds) {
+    const draggedIndex = currentOrderIds.indexOf(draggedId);
+    const targetIndex = currentOrderIds.indexOf(targetId);
     const withoutDragged = currentOrderIds.filter((id) => id !== draggedId);
-    const targetIndex = withoutDragged.indexOf(targetId);
-    withoutDragged.splice(targetIndex, 0, draggedId);
+    let newIndex = withoutDragged.indexOf(targetId);
+    if (draggedIndex < targetIndex) {
+        newIndex += 1;
+    }
+    withoutDragged.splice(newIndex, 0, draggedId);
     chrome.storage.local.set({ groupOrder: withoutDragged });
 }
 
@@ -308,9 +315,9 @@ chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== 'local') {
         return;
     }
-    if (changes.todos) {
+    if (changes.todos || changes.groupOrder) {
         loadAndRenderTodos();
-    }    
+    }
     if (changes.authStatus) {
         updateAuthBanner();
     }
