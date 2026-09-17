@@ -184,8 +184,8 @@ function updateTodoDoneState(todoId, newDoneValue) {
 }
 
 function loadAndRenderTodos() {
-    chrome.storage.local.get(['todos', 'groupOrder'], ({ todos, groupOrder }) => {
-        renderTodos(todos || [], groupOrder || []);
+    chrome.storage.local.get(['todos', 'groupOrder', 'collapsedGroups'], ({ todos, groupOrder, collapsedGroups }) => {
+        renderTodos(todos || [], groupOrder || [], collapsedGroups || []);
     });
 }
 
