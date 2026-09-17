@@ -48,32 +48,31 @@ function renderTodos(todos, groupOrder) {
     const currentOrderIds = sortedGroups.map((group) => group.eventId);
 
     sortedGroups.forEach((group) => {
-        const meetingHeader = document.createElement('h3');
-        meetingHeader.textContent = group.title;
-        meetingHeader.draggable = true;
-        meetingHeader.className = 'draggable-heading';
+        const groupWrapper = document.createElement('div');
+        groupWrapper.className = 'group-wrapper';
+        groupWrapper.draggable = true;
 
-        meetingHeader.addEventListener('dragstart', (event) => {
+        groupWrapper.addEventListener('dragstart', (event) => {
             event.dataTransfer.setData('text/plain', group.eventId);
-            meetingHeader.classList.add('dragging');
+            groupWrapper.classList.add('dragging');
         });
 
-        meetingHeader.addEventListener('dragend', () => {
-            meetingHeader.classList.remove('dragging');
+        groupWrapper.addEventListener('dragend', () => {
+            groupWrapper.classList.remove('dragging');
         });
 
-        meetingHeader.addEventListener('dragover', (event) => {
+        groupWrapper.addEventListener('dragover', (event) => {
             event.preventDefault();
-            meetingHeader.classList.add('drag-over');
+            groupWrapper.classList.add('drag-over');
         });
 
-        meetingHeader.addEventListener('dragleave', () => {
-            meetingHeader.classList.remove('drag-over');
+        groupWrapper.addEventListener('dragleave', () => {
+            groupWrapper.classList.remove('drag-over');
         });
 
-        meetingHeader.addEventListener('drop', (event) => {
+        groupWrapper.addEventListener('drop', (event) => {
             event.preventDefault();
-            meetingHeader.classList.remove('drag-over');
+            groupWrapper.classList.remove('drag-over');
             const draggedId = event.dataTransfer.getData('text/plain');
             const targetId = group.eventId;
             if (draggedId === targetId) {
@@ -82,7 +81,9 @@ function renderTodos(todos, groupOrder) {
             reorderGroups(draggedId, targetId, currentOrderIds);
         });
 
-        container.appendChild(meetingHeader);
+        const meetingHeader = document.createElement('h3');
+        meetingHeader.textContent = group.title;
+        groupWrapper.appendChild(meetingHeader);
 
         const list = document.createElement('ul');
 
@@ -107,7 +108,7 @@ function renderTodos(todos, groupOrder) {
             item.appendChild(label);
             list.appendChild(item);
         });
-        container.appendChild(list);
+        groupWrapper.appendChild(list);
 
         const addToggle = document.createElement('button');
         addToggle.textContent = '+';
@@ -149,8 +150,10 @@ function renderTodos(todos, groupOrder) {
         });
         addRow.appendChild(input);
         addRow.appendChild(addButton);
-        container.appendChild(addToggle);
-        container.appendChild(addRow);
+        groupWrapper.appendChild(addToggle);
+        groupWrapper.appendChild(addRow);
+
+        container.appendChild(groupWrapper);
     });
 }
 
@@ -312,25 +315,6 @@ chrome.storage.onChanged.addListener((changes, area) => {
         updateAuthBanner();
     }
 });
-
-meetingHeader.addEventListener('drop', (event) => {
-    event.preventDefault();
-    console.log("DROP FIRED", { draggedId: event.dataTransfer.getData('text/plain'), targetId: group.eventId });
-    meetingHeader.classList.remove('drag-over');
-    const draggedId = event.dataTransfer.getData('text/plain');
-    const targetId = group.eventId;
-    if (draggedId === targetId) {
-        return;
-    }
-    reorderGroups(draggedId, targetId, currentOrderIds);
-});
-
-meetingHeader.addEventListener('dragstart', (event) => {
-    console.log("DRAG START", group.eventId);
-    event.dataTransfer.setData('text/plain', group.eventId);
-    meetingHeader.classList.add('dragging');
-});
-
 
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
     applyTheme();

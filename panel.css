@@ -232,14 +232,15 @@ body[data-theme="dark"] #theme-toggle-button {
     border-color: #444444;
 }
 
-.draggable-heading {
-    cursor: grab;
+.group-wrapper {
+  cursor: grab;
+  margin-bottom: 16px;
 }
 
-.draggable-heading.dragging {
-    opacity: 0.4;
+.group-wrapper.dragging {
+  opacity: 0.4;
 }
 
-.draggable-heading.drag-over {
-    border-top: 2px solid #1a73e8;
+.group-wrapper.drag-over {
+  border-top: 2px solid #1a73e8;
 }
