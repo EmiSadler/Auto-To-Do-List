@@ -325,6 +325,12 @@ meetingHeader.addEventListener('drop', (event) => {
     reorderGroups(draggedId, targetId, currentOrderIds);
 });
 
+meetingHeader.addEventListener('dragstart', (event) => {
+    console.log("DRAG START", group.eventId);
+    event.dataTransfer.setData('text/plain', group.eventId);
+    meetingHeader.classList.add('dragging');
+});
+
 
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
     applyTheme();
