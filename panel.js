@@ -313,24 +313,6 @@ chrome.storage.onChanged.addListener((changes, area) => {
     }
 });
 
-meetingHeader.addEventListener('drop', (event) => {
-    event.preventDefault();
-    console.log("DROP FIRED", { draggedId: event.dataTransfer.getData('text/plain'), targetId: group.eventId });
-    meetingHeader.classList.remove('drag-over');
-    const draggedId = event.dataTransfer.getData('text/plain');
-    const targetId = group.eventId;
-    if (draggedId === targetId) {
-        return;
-    }
-    reorderGroups(draggedId, targetId, currentOrderIds);
-});
-
-meetingHeader.addEventListener('dragstart', (event) => {
-    console.log("DRAG START", group.eventId);
-    event.dataTransfer.setData('text/plain', group.eventId);
-    meetingHeader.classList.add('dragging');
-});
-
 
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
     applyTheme();
