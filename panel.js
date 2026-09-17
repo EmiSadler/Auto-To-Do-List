@@ -31,7 +31,7 @@ function addCustomTodo(text, sourceEventId, sourceEventTitle, sourceMeetingType)
     });
 }
 
-function renderTodos(todos, groupOrder) {
+function renderTodos(todos, groupOrder, collapsedGroups) {
     const container = document.getElementById('todo-list');
     container.innerHTML = "";
 
@@ -51,6 +51,11 @@ function renderTodos(todos, groupOrder) {
         const groupWrapper = document.createElement('div');
         groupWrapper.className = 'group-wrapper';
         groupWrapper.draggable = true;
+
+        const isCollapsed = collapsedGroups.includes(group.eventId);
+        if (isCollapsed) {
+            groupWrapper.classList.add('collapsed');
+        }
 
         groupWrapper.addEventListener('dragstart', (event) => {
             event.dataTransfer.setData('text/plain', group.eventId);
