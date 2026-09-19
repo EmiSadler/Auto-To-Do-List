@@ -31,6 +31,40 @@ function addCustomTodo(text, sourceEventId, sourceEventTitle, sourceMeetingType)
     });
 }
 
+function makeEditable(displayElement, currentText, onSave) {
+    const startEdit = () => {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = currentText;
+        input.className = 'inline-edit-input';
+
+        const finishEdit = () => {
+            const newText = input.value.trim();
+            if (newText !== '' && newText !== currentText) {
+                onSave(newText);
+            } else {
+                input.replaceWith(displayElement);
+            }
+        };
+
+        input.addEventListener('blur', finishEdit);
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                input.blur();
+            }
+            if (e.key === 'Escape') {
+                input.replaceWith(displayElement);
+            }
+        });
+
+        displayElement.replaceWith(input);
+        input.focus();
+        input.select();
+    };
+
+    return startEdit;
+}
+
 function buildDisplayGroups(todos, pinnedHeadings) {
     const grouped = groupTodosByMeeting(todos);
 
@@ -114,9 +148,21 @@ function renderTodos(todos, groupOrder, collapsedGroups, pinnedHeadings) {
 
         const meetingHeader = document.createElement('h3');
         meetingHeader.textContent = group.title;
-        meetingHeader.className = 'collapsible-header';
+        meetingHeader.className = 'collapsible-header editable-text';
         meetingHeader.addEventListener('click', () => {
             toggleGroupCollapsed(group.eventId);
+        });
+
+        const editButton = document.createElement('button');
+        editButton.className = 'edit-button';
+        editButton.textContent = '✏️';
+        editButton.title = 'Rename this heading';
+        const startEditingHeading = makeEditable(meetingHeader, group.title, (newText) => {
+            updateHeadingTitle(group.eventId, newText);
+        });
+        editButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            startEditingHeading();
         });
 
         const pinButton = document.createElement('button');
@@ -129,6 +175,7 @@ function renderTodos(todos, groupOrder, collapsedGroups, pinnedHeadings) {
         });
 
         headerRow.appendChild(meetingHeader);
+        headerRow.appendChild(editButton);
         headerRow.appendChild(pinButton);
         groupWrapper.appendChild(headerRow);
 
@@ -153,6 +200,14 @@ function renderTodos(todos, groupOrder, collapsedGroups, pinnedHeadings) {
 
             const label = document.createElement('span');
             label.textContent = todo.text;
+            label.className = 'editable-text';
+            const startEditingLabel = makeEditable(label, todo.text, (newText) => {
+                updateTodoText(todo.id, newText);
+            });
+            label.addEventListener('click', (event) => {
+                event.stopPropagation();
+                startEditingLabel();
+            });
 
             item.appendChild(checkbox);
             item.appendChild(label);
@@ -239,6 +294,27 @@ function togglePinned(eventId, title, type) {
             ? current.filter((p) => p.eventId !== eventId)
             : [...current, { eventId, title, type }];
         chrome.storage.local.set({ pinnedHeadings: updated });
+    });
+}
+
+function updateHeadingTitle(eventId, newTitle) {
+    chrome.storage.local.get(['todos', 'pinnedHeadings'], ({ todos, pinnedHeadings }) => {
+        const updatedTodos = (todos || []).map((t) =>
+            t.sourceEventId === eventId ? { ...t, sourceEventTitle: newTitle } : t
+        );
+        const updatedPinned = (pinnedHeadings || []).map((p) =>
+            p.eventId === eventId ? { ...p, title: newTitle } : p
+        );
+        chrome.storage.local.set({ todos: updatedTodos, pinnedHeadings: updatedPinned });
+    });
+}
+
+function updateTodoText(todoId, newText) {
+    chrome.storage.local.get('todos', ({ todos }) => {
+        const updated = todos.map((t) =>
+            t.id === todoId ? { ...t, text: newText } : t
+        );
+        chrome.storage.local.set({ todos: updated });
     });
 }
 

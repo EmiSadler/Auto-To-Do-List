@@ -277,3 +277,23 @@ body[data-theme="dark"] #theme-toggle-button {
   font-size: 14px;
   padding: 2px 6px;
 }
+
+.editable-text {
+  cursor: text;
+}
+
+.inline-edit-input {
+  font: inherit;
+  border: 1px solid #1a73e8;
+  border-radius: 4px;
+  padding: 2px 4px;
+  width: 100%;
+}
+
+.edit-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 6px;
+}
