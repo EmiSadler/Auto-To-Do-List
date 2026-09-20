@@ -248,6 +248,7 @@ body[data-theme="dark"] #theme-toggle-button {
 .collapsible-header {
   cursor: pointer;
   user-select: none;
+  flex: 1;
 }
 
 .collapsible-header::before {
