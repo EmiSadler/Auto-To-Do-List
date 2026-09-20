@@ -17,6 +17,10 @@ A Chrome extension that watches your Google Calendar, and when a meeting starts,
 - A Google account with Calendar access
 - A Google Cloud account (free) to create OAuth credentials
 
+## Download it now in the Chrome Web Store
+
+[Auto-To-Do-List](https://chromewebstore.google.com/detail/pligjbpdgpamgimlodchhalndcplkhhn?utm_source=item-share-cb "Auto-To-Do-List")
+
 ## Setup
 
 ### 1. Load the extension in Chrome
@@ -45,12 +49,14 @@ A Chrome extension that watches your Google Calendar, and when a meeting starts,
 
 1. Open `manifest.json`.
 2. Confirm the `oauth2` key contains your Client ID:
+
 ```json
    "oauth2": {
      "client_id": "YOUR_CLIENT_ID_HERE",
      "scopes": ["https://www.googleapis.com/auth/calendar.readonly"]
    }
 ```
+
 3. Reload the extension on `chrome://extensions`.
 
 ### 5. Connect your calendar
@@ -66,13 +72,13 @@ Leave the side panel open (or just installed - it runs in the background regardl
 
 See `TAXONOMY.md` for the full list. Summary:
 
-| Type | Example keywords |
-|---|---|
-| Placement Meeting | placement, tri-part, placement call |
-| Progress Meeting | progress, progress call |
-| Wellbeing Meeting | wellbeing, well-being, wellbeing catch-up |
+| Type                 | Example keywords                                         |
+| -------------------- | -------------------------------------------------------- |
+| Placement Meeting    | placement, tri-part, placement call                      |
+| Progress Meeting     | progress, progress call                                  |
+| Wellbeing Meeting    | wellbeing, well-being, wellbeing catch-up                |
 | Excluded (no to-dos) | lunch, admin, meditation, ooo, busy, focus time, commute |
-| Unrecognized | generates a single fallback review to-do |
+| Unrecognized         | generates a single fallback review to-do                 |
 
 To adjust keywords or to-do templates, edit `TAXONOMY.md`/`TEMPLATES.md` for reference, then update `MEETING_TYPES`, `EXCLUDED_KEYWORDS`, and `TODO_TEMPLATES` in `background.js` to match.
 
